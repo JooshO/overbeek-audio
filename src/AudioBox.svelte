@@ -4,6 +4,7 @@
   // @ts-ignore
   import YoutubePlayer from "youtube-player";
 
+  // necesary info - video id, nickname, delete callback
   export let id: string;
   export let nickname: string;
   export let onDelete: (id: String, nickname: String) => void;
@@ -18,14 +19,17 @@
   };
 
   let playerElem: HTMLDivElement;
-  let className;
   let isPlaying: boolean = false;
+
+  // this type is awful and does not add clarity so I'm breaking convention and leaving it
+  // like this
   let player;
 
   onMount(() => createPlayer());
 
   function createPlayer() {
     player = YoutubePlayer(playerElem, {
+      // make the video invisable
       height: "0",
       width: "0",
       videoId: id,
@@ -34,7 +38,6 @@
         loop: 1,
         playlist: id, // this is necesary for looping a single video properly
       },
-      // host: "https://www.youtube-nocookie.com",
       showInfo: false,
       origin: "https://",
     });
@@ -45,42 +48,49 @@
     return () => player.destroy();
   }
 
+  /**
+   * Calls our callback for us
+   */
   function onDeleteHelper() {
     onDelete(id, nickname);
   }
 
+  /**
+   * Sets whether we thing we are playing or not
+   * @param event
+   */
   function onPlayerStateChange(event) {
-    console.log("Current state: " + event.data);
     switch (event.data) {
       case PlayerState.ENDED:
+      case PlayerState.PAUSED:
+      case PlayerState.CUED:
         isPlaying = false;
         break;
       case PlayerState.PLAYING:
         isPlaying = true;
         break;
-      case PlayerState.PAUSED:
-        isPlaying = false;
-        break;
-      case PlayerState.CUED:
-        isPlaying = false;
-        break;
       default:
     }
   }
 
+  /**
+   * Toggles whether we are paused or playing
+   */
   function onPausePlay() {
-    console.log("Am I playing? " + isPlaying);
     if (!isPlaying) {
       player.playVideo().then(function () {
-        // isPlaying = !isPlaying;
+        // Leaving space here in case I need to handle something
       });
     } else {
       player.pauseVideo().then(function () {
-        // isPlaying = !isPlaying;
+        // Leaving space here in case I need to handle something
       });
     }
   }
 
+  /**
+   * Seeks to the start of the video then pauses it
+   */
   function resetVideo() {
     console.log("RESET");
     player.seekTo(0, true);
