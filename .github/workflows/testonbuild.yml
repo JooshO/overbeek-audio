@@ -9,6 +9,7 @@ jobs:
         platform: [macos-latest, ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.platform }}
+    environment: build
     steps:
     - uses: actions/checkout@v2
     - name: setup node
