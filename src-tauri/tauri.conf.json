@@ -52,7 +52,11 @@
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "wix": {
+          "skipWebviewInstall": true,
+          "template": "./installconf.wxs"
+        }
       }
     },
     "security": {
