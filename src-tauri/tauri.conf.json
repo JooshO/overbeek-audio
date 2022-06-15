@@ -7,8 +7,8 @@
     "distDir": "../public"
   },
   "package": {
-    "productName": "music-player",
-    "version": "0.1.0"
+    "productName": "overbeek-audio",
+    "version": "0.1.3"
   },
   "tauri": {
     "allowlist": {
@@ -24,7 +24,7 @@
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
+      "category": "Music",
       "copyright": "",
       "deb": {
         "depends": []
@@ -52,14 +52,23 @@
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "wix": {
+          "skipWebviewInstall": true,
+          "template": "./installconf.wxs"
+        }
       }
     },
     "security": {
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "endpoints": [
+        "https://gist.githubusercontent.com/JooshO/2cbb76a4e11ab1984d551d029bebeb98/raw/"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDczQjMzMkY1OTQ4QkU1MDQKUldRRTVZdVU5VEt6Y3hsTjdpN3NZOEJPZGVkbzVGb1JKWnE1cnpxckhvdFpMaEFoNldZWFZYcjYK"
     },
     "windows": [
       {
