@@ -2637,9 +2637,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-build"
-version = "1.0.0-rc.15"
+version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57da703bf4ba9a5abd4564422b27de1da13f752a81fc14de95d3a7f16c1db678"
+checksum = "598bd36884ee15ac73dfca9921066fd87d13d9beea60384b99a66c3a5d800d70"
 dependencies = [
  "anyhow",
  "cargo_toml",
@@ -2726,9 +2726,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-utils"
-version = "1.0.0-rc.9"
+version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b09e7ec7933a833f3b64e932a9d32d94705687aa5caa3cacf43222876a6d7e24"
+checksum = "616f178da1e0466ca45963ed108a1567d4b8803662addaca313169d0dcd97715"
 dependencies = [
  "brotli",
  "ctor",
@@ -2748,6 +2748,7 @@ dependencies = [
  "thiserror",
  "url",
  "walkdir",
+ "windows",
 ]
 
 [[package]]
