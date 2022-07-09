@@ -1,6 +1,6 @@
 [package]
 name = "overbeek_audio"
-version = "0.1.5"
+version = "0.1.6"
 description = "A music player for RPG sessions"
 authors = ["Josh <josh@overbeek.dev>"]
 license = "GPL-3.0"
@@ -12,12 +12,12 @@ rust-version = "1.57"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.0.0-rc.15", features = [] }
+tauri-build = { version = "1.0.3", features = [] }
 
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.0.0-rc.17", features = ["dialog-all", "fs-read-file", "fs-write-file", "updater"] }
+tauri = { version = "1.0.3", features = ["dialog-all", "fs-read-file", "fs-write-file", "updater"] }
 
 [features]
 # by default Tauri runs in production mode
