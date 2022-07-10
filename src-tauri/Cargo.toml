@@ -1,6 +1,6 @@
 [package]
 name = "overbeek_audio"
-version = "0.1.6"
+version = "0.1.7"
 description = "A music player for RPG sessions"
 authors = ["Josh <josh@overbeek.dev>"]
 license = "GPL-3.0"

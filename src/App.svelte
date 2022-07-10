@@ -75,6 +75,8 @@
 
 <main>
   <div class="input-zone">
+    <button on:click={saveDialog}> Save </button>
+    <button on:click={loadDialog}> Load </button>
     <input bind:value={currentID} placeholder="Input Video ID" />
     <input bind:value={currentNickname} placeholder="Input Video Nickname" />
     <button on:click={onAdd}>Add Video</button>
@@ -87,10 +89,6 @@
     {:else}
       Add some music!
     {/each}
-  </div>
-  <div class="save-load-zone">
-    <button on:click={saveDialog}> Save </button>
-    <button on:click={loadDialog}> Load </button>
   </div>
 </main>
 
