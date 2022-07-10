@@ -7,12 +7,27 @@
   import { readTextFile, writeFile } from "@tauri-apps/api/fs";
 
   import Modal from "./Modal.svelte";
+  import { element, get_root_for_style } from "svelte/internal";
 
   let showVideoModal: boolean = false;
   let showHelpModal: boolean = false;
   let currentID: string = "";
   let currentNickname: string = "";
   let audios = [];
+  var root = document.querySelector(":root");
+  let darkTheme = true;
+
+  function toggleDark() {
+    if (darkTheme) {
+      // this errors but it works exactly right so idk why this pretends not to work
+      root.style.setProperty("--theme-color", "#000000");
+      root.style.setProperty("--theme-bg-color", "#FFFFFF");
+    } else {
+      root.style.setProperty("--theme-color", "#e9ebf0");
+      root.style.setProperty("--theme-bg-color", "#303443");
+    }
+    darkTheme = !darkTheme;
+  }
 
   /**
    * Add a new Audio element based on the current values of the id and nickname field
@@ -106,6 +121,7 @@
         and click "Submit"
       </Modal>
     {/if}
+    <button on:click={toggleDark}>Dark Mode</button>
 
     <button on:click={clear}>Clear Videos</button>
   </div>
@@ -120,7 +136,18 @@
 </main>
 
 <style>
+  :root {
+    --theme-color: #e9ebf0;
+    --theme-bg-color: #303443;
+  }
+
+  :global(body) {
+    background-color: var(--theme-bg-color);
+    color: var(--theme-color);
+  }
+
   main {
+    background-color: inherit;
     text-align: center;
     padding: 1em;
     max-width: 240px;

@@ -49,7 +49,10 @@
     transform: translate(-50%, -50%);
     padding: 1em;
     border-radius: 0.2em;
-    background: white;
+    border-width: 0.2em;
+    border-style: ridge;
+    background: inherit;
+    border-color: white;
   }
 
   button {
