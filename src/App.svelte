@@ -6,6 +6,10 @@
   import { save, open } from "@tauri-apps/api/dialog";
   import { readTextFile, writeFile } from "@tauri-apps/api/fs";
 
+  import Modal from "./Modal.svelte";
+
+  let showVideoModal: boolean = false;
+  let showHelpModal: boolean = false;
   let currentID: string = "";
   let currentNickname: string = "";
   let audios = [];
@@ -77,9 +81,32 @@
   <div class="input-zone">
     <button on:click={saveDialog}> Save </button>
     <button on:click={loadDialog}> Load </button>
-    <input bind:value={currentID} placeholder="Input Video ID" />
-    <input bind:value={currentNickname} placeholder="Input Video Nickname" />
-    <button on:click={onAdd}>Add Video</button>
+    <button on:click={() => (showVideoModal = true)}>Add Video</button>
+    {#if showVideoModal}
+      <Modal on:close={() => (showVideoModal = false)}>
+        <h2 slot="header">Add Video</h2>
+
+        <input bind:value={currentID} placeholder="Input Video ID" />
+        <input
+          bind:value={currentNickname}
+          placeholder="Input Video Nickname"
+        />
+        <button on:click={onAdd}> Load </button>
+      </Modal>
+    {/if}
+    <button on:click={() => (showHelpModal = true)}>?</button>
+    {#if showHelpModal}
+      <Modal on:close={() => (showHelpModal = false)}>
+        <h2 slot="header">Help</h2>
+        To use, first click add video to open the add pop-up. Then, simply click
+        the share link under a YouTube video and copy the part of the URL highlighted
+        here:
+        <img src="../youtubeurl.png" alt="YouTube Share URL" />
+        Then paste that into the "id" box on the app, add a nickname for the audio,
+        and click "Submit"
+      </Modal>
+    {/if}
+
     <button on:click={clear}>Clear Videos</button>
   </div>
   <div class="audio-zone">
