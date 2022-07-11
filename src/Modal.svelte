@@ -51,11 +51,17 @@
     border-radius: 0.2em;
     border-width: 0.2em;
     border-style: ridge;
-    background: inherit;
+    background: var(--theme-bg-color);
     border-color: white;
   }
 
   button {
     display: block;
+    color: inherit;
+    background-color: var(--theme-alt-bg);
+  }
+
+  button:hover {
+    background-color: var(--button-hover);
   }
 </style>

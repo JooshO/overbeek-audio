@@ -117,4 +117,13 @@
     padding: 1em;
     margin: 0.5em 0.5em 0.5em 0.5em;
   }
+
+  button {
+    color: inherit;
+    background-color: var(--theme-alt-bg);
+  }
+
+  button:hover {
+    background-color: var(--button-hover);
+  }
 </style>

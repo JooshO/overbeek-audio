@@ -19,12 +19,22 @@
 
   function toggleDark() {
     if (darkTheme) {
-      // this errors but it works exactly right so idk why this pretends not to work
-      root.style.setProperty("--theme-color", "#000000");
-      root.style.setProperty("--theme-bg-color", "#FFFFFF");
+      // this errors but it works exactly right so idk why this pretends not to work (it's bc TS)
+      //@ts-ignore
+      root.style.setProperty("--theme-color", "#000000"); //@ts-ignore
+      root.style.setProperty("--theme-bg-color", "#FFFFFF"); //@ts-ignore
+      root.style.setProperty("--theme-alt-bg", "#f4f4f4"); //@ts-ignore
+      root.style.setProperty("--theme-input", "#ffffff"); //@ts-ignore
+      root.style.setProperty("--theme-input-text", "#798290"); //@ts-ignore
+      root.style.setProperty("--button-hover", "#b4b4b4"); //@ts-ignore
     } else {
-      root.style.setProperty("--theme-color", "#e9ebf0");
-      root.style.setProperty("--theme-bg-color", "#303443");
+      //@ts-ignore
+      root.style.setProperty("--theme-color", "#e9ebf0"); //@ts-ignore
+      root.style.setProperty("--theme-bg-color", "#303443"); //@ts-ignore
+      root.style.setProperty("--theme-alt-bg", "#2a344a"); //@ts-ignore
+      root.style.setProperty("--theme-input", "#4e6496"); //@ts-ignore
+      root.style.setProperty("--theme-input-text", "#FFFFFF"); //@ts-ignore
+      root.style.setProperty("--button-hover", "#1c2539"); //@ts-ignore
     }
     darkTheme = !darkTheme;
   }
@@ -96,19 +106,26 @@
   <div class="input-zone">
     <button on:click={saveDialog}> Save </button>
     <button on:click={loadDialog}> Load </button>
+
     <button on:click={() => (showVideoModal = true)}>Add Video</button>
     {#if showVideoModal}
       <Modal on:close={() => (showVideoModal = false)}>
         <h2 slot="header">Add Video</h2>
 
-        <input bind:value={currentID} placeholder="Input Video ID" />
         <input
+          class="text-input"
+          bind:value={currentID}
+          placeholder="Input Video ID"
+        />
+        <input
+          class="text-input"
           bind:value={currentNickname}
           placeholder="Input Video Nickname"
         />
         <button on:click={onAdd}> Load </button>
       </Modal>
     {/if}
+
     <button on:click={() => (showHelpModal = true)}>?</button>
     {#if showHelpModal}
       <Modal on:close={() => (showHelpModal = false)}>
@@ -121,7 +138,9 @@
         and click "Submit"
       </Modal>
     {/if}
-    <button on:click={toggleDark}>Dark Mode</button>
+    <button on:click={toggleDark}
+      >{darkTheme ? "Light Mode" : "Dark Mode"}</button
+    >
 
     <button on:click={clear}>Clear Videos</button>
   </div>
@@ -139,6 +158,10 @@
   :root {
     --theme-color: #e9ebf0;
     --theme-bg-color: #303443;
+    --theme-alt-bg: #2a344a;
+    --theme-input: #4e6496;
+    --theme-input-text: #ffffff;
+    --button-hover: #1c2539;
   }
 
   :global(body) {
@@ -156,11 +179,29 @@
     flex-direction: column;
   }
 
+  button {
+    color: inherit;
+    background-color: var(--theme-alt-bg);
+  }
+
+  button:hover {
+    background-color: var(--button-hover);
+  }
+
+  .text-input {
+    color: inherit;
+    background-color: var(--theme-input);
+  }
+
   .audio-zone {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  ::placeholder {
+    color: var(--theme-input-text);
   }
 
   @media (min-width: 640px) {
