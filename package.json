@@ -29,6 +29,7 @@
   "dependencies": {
     "@tauri-apps/api": "^1.0.1",
     "sirv-cli": "^2.0.0",
+    "tauri-settings": "^0.1.2",
     "youtube-player": "^5.5.2"
   }
 }
