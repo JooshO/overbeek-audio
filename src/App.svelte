@@ -7,16 +7,57 @@
   import { readTextFile, writeFile } from "@tauri-apps/api/fs";
 
   import Modal from "./Modal.svelte";
-  import { element, get_root_for_style } from "svelte/internal";
 
+  // using https://github.com/harshkhandeparkar/tauri-settings
+  // to use this I need to set "scope": ["**"], in the fs allowList which is kinda rough, I need to see if I can limit that scope
+  import { set, get, has } from "tauri-settings";
+
+  // settings schema
+  type Schema = {
+    isDarkTheme: boolean;
+  };
+
+  // show variables for modals
   let showVideoModal: boolean = false;
   let showHelpModal: boolean = false;
+  let showSettingsModal: boolean = false;
+
+  // input nickname and ID for adding a video
   let currentID: string = "";
   let currentNickname: string = "";
-  let audios = [];
-  var root = document.querySelector(":root");
-  let darkTheme = true;
 
+  // list of audio data
+  let audios = [];
+
+  // root style
+  var root = document.querySelector(":root");
+
+  // local dark theme tracker
+  let darkTheme: boolean = true;
+  let darkString: "isDarkTheme";
+
+  // if the settings file does not have dark theme, then add it and set to true by default
+  // this is basically upgrade code
+  has<Schema>(darkString).then((present) => {
+    if (!present) {
+      set<Schema>(darkString, true);
+    }
+  });
+
+  // get current dark theme setting
+  get<Schema>(darkString)
+    .then((theme) => {
+      // this is kinda hacky and will cause the window to flash dark when loading in light theme
+      if (!theme) toggleDark();
+      darkTheme = theme;
+    })
+    .catch((reason) => {
+      console.log(reason);
+    });
+
+  /**
+   * Toggles the current theme between light and dark
+   */
   function toggleDark() {
     if (darkTheme) {
       // this errors but it works exactly right so idk why this pretends not to work (it's bc TS)
@@ -37,6 +78,7 @@
       root.style.setProperty("--button-hover", "#1c2539"); //@ts-ignore
     }
     darkTheme = !darkTheme;
+    set<Schema>(darkString, darkTheme).then(() => {});
   }
 
   /**
@@ -138,9 +180,16 @@
         and click "Submit"
       </Modal>
     {/if}
-    <button on:click={toggleDark}
-      >{darkTheme ? "Light Mode" : "Dark Mode"}</button
-    >
+
+    <button on:click={() => (showSettingsModal = true)}>Settings</button>
+    {#if showSettingsModal}
+      <Modal on:close={() => (showSettingsModal = false)}>
+        <h2 slot="header">Settings</h2>
+        <button on:click={toggleDark}
+          >{darkTheme ? "Light Mode" : "Dark Mode"}</button
+        >
+      </Modal>
+    {/if}
 
     <button on:click={clear}>Clear Videos</button>
   </div>
