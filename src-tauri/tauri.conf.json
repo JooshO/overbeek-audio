@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "overbeek-audio",
-    "version": "0.1.7"
+    "version": "0.1.8"
   },
   "tauri": {
     "allowlist": {
@@ -18,8 +18,14 @@
         "save": true 
       },
       "fs" : {
+        "scope": ["**"],
         "readFile": true,
-        "writeFile": true
+        "writeFile": true,
+        "createDir": true,
+        "readDir": true
+      },
+      "path": {
+        "all": true
       }
     },
     "bundle": {

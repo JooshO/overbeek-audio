@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { onDestroy } from "svelte";
 
   // @ts-ignore
   import YoutubePlayer from "youtube-player";
@@ -47,6 +48,8 @@
     // Tear down player when done
     return () => player.destroy();
   }
+
+  onDestroy(() => player.destroy());
 
   /**
    * Calls our callback for us
@@ -115,6 +118,15 @@
     border-radius: 2px;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     padding: 1em;
-    margin: 0 0 1em 0;
+    margin: 0.5em 0.5em 0.5em 0.5em;
+  }
+
+  button {
+    color: inherit;
+    background-color: var(--theme-alt-bg);
+  }
+
+  button:hover {
+    background-color: var(--button-hover);
   }
 </style>
