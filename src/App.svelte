@@ -28,6 +28,7 @@
 
   // list of audio data
   let audios = [];
+  let unique = {};
 
   // root style
   var root = document.querySelector(":root");
@@ -100,6 +101,8 @@
   function del(id: String, nickname: String) {
     // filters the list to only contain the elements that don't match
     audios = audios.filter((a) => a.id !== id && a.nickname != nickname);
+    unique = {};
+    console.log(audios);
   }
 
   /**
@@ -194,12 +197,18 @@
     <button on:click={clear}>Clear Videos</button>
   </div>
   <div class="audio-zone">
-    <!-- Loads each audio in the audio list as an audio box. This is reloaded on assignment -->
-    {#each audios as audio}
-      <AudioBox nickname={audio.nickname} id={audio.id} onDelete={del} />
-    {:else}
-      Add some music!
-    {/each}
+    <!-- Loads each audio in the audio list as an audio box. This is reloaded on assignment. -->
+    <!-- This is a pretty resource intensive way of doing this (fully recreate elements each time).
+          However, doing it the old way led to desync between the players and the AudioBoxes.
+          An alternate solution would be to handle the players at this level, but that would break
+          any pretense of encapsulation and make the code ugly.-->
+    {#key unique}
+      {#each audios as audio}
+        <AudioBox nickname={audio.nickname} id={audio.id} onDelete={del} />
+      {:else}
+        Add some music!
+      {/each}
+    {/key}
   </div>
 </main>
 
