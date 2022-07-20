@@ -1,7 +1,7 @@
 name: "test-on-pr"
 on: 
   pull_request:
-    branches: release
+    branches: main
 
 jobs:
   test-tauri:
