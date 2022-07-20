@@ -8,7 +8,8 @@
   // necesary info - video id, nickname, delete callback
   export let id: string;
   export let nickname: string;
-  export let onDelete: (id: String, nickname: String) => void;
+  export let index: number; // exclusively to key this object
+  export let onDelete: (id: string, nickname: string) => void;
 
   const PlayerState = {
     UNSTARTED: -1,
@@ -26,7 +27,10 @@
   // like this
   let player;
 
-  onMount(() => createPlayer());
+  onMount(() => {
+    console.log(index); // to supress warning
+    createPlayer();
+  });
 
   function createPlayer() {
     player = YoutubePlayer(playerElem, {
@@ -55,7 +59,12 @@
    * Calls our callback for us
    */
   function onDeleteHelper() {
-    onDelete(id, nickname);
+    // pause the player then kill it via callback
+    player.pauseVideo().then(function () {
+      // this should be handled by onPlayerStateChange, but just in case
+      isPlaying = false;
+      onDelete(id, nickname);
+    });
   }
 
   /**
@@ -80,15 +89,17 @@
    * Toggles whether we are paused or playing
    */
   function onPausePlay() {
-    if (!isPlaying) {
-      player.playVideo().then(function () {
-        // Leaving space here in case I need to handle something
-      });
-    } else {
-      player.pauseVideo().then(function () {
-        // Leaving space here in case I need to handle something
-      });
-    }
+    player.getPlayerState().then((state) => {
+      if (state == PlayerState.PLAYING) {
+        player.pauseVideo().then(function () {
+          // Leaving space here in case I need to handle something
+        });
+      } else {
+        player.playVideo().then(function () {
+          // Leaving space here in case I need to handle something
+        });
+      }
+    });
   }
 
   /**
